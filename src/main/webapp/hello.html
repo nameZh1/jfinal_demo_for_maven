@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        // $(document).ready()页面加载完自动执行js代码
+        $(document).ready(function (){
+            //绑定点击事件
+            $("#addSubmit").click(function(){
+                //attr 获取元素属性
+                var Url = "/hello/show";
+                //序列化表单值
+                // var data = $("#addForm").serialize();
+                alert("1");
+                $.ajax({
+                    type: "post",
+                    url: Url,
+                    cache: false,
+                    // data: data,
+                    datatype: "json",
+                    success: function (ret) {
+                        alert(data);
+                        if (ret.state == "ok") {
+                            //控制台打印
+                            // console.log(ret);
+                            //Json转字符串输出
+                            // alert(JSON.stringify(ret));
+                            $("#user").val("用户"+data.user);
+                            $("#age").val("年龄"+data.age);
+                            alert("OK");
+                        }
+                    },
+                    error: function () {
+                        alert("fail");
+                    },
+                })
+            })
+        })
+    </script>
+
+</head>
+<body>
+<form id="addForm" action="/hello/show" method="post">
+    User:<input type="text" name="user" value="${(user)!}"><br>
+    age:<input type="text" name="age" value="${(age)!}"><br>
+    <button type="button" id="addSubmit">获取</button>
+</form>
+
+<div>
+    <table id="list">
+        <thead>
+        <tr>
+            <th>测试</th>
+        </tr>
+        </thead>
+        <tbody id="listbody">
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

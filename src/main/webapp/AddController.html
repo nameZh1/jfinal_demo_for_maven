@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        // $(document).ready()页面加载完自动执行js代码
+        $(document).ready(function (){
+            //绑定点击事件
+            $("#addSubmit").click(function(){
+                //attr 获取元素属性
+                var Url = $("#addForm").attr("action");
+                //序列化表单值
+                var data = $("#addForm").serialize();
+                $.ajax({
+                    type: "post",
+                    url: Url,
+                    cache: false,
+                    data: data,
+                    datatype: "json",
+                    success: function (ret) {
+                        if (ret.state == "ok") {
+                            //控制台打印
+                            // console.log(ret);
+                            //Json转字符串输出
+                            // alert(JSON.stringify(ret));
+
+                            $("#listbody").append(
+                                "<tr>"+
+                                "<td>姓名：</td>"+
+                                "<td>" + ret.name +"</td>"+
+                                "</tr>"+
+
+                                "<tr>"+
+                                "<td>年龄</td>"+
+                                "<td>" + ret.age +"</td>"+
+                                "</tr>"
+                            );
+                            alert("OK");
+
+                        }
+                    },
+                    error: function () {
+                        alert("fail");
+                    }
+                })
+            })
+        })
+    </script>
+
+</head>
+<body>
+<form id="addForm" action="/AddController/add" method="post">
+    User:<input type="text" name="name" placeholder="姓名"><br>
+    age:<input type="text" name="age" placeholder="年龄"><br>
+    <button type="button" id="addSubmit">添加</button>
+</form>
+
+<div>
+    <table id="list">
+        <thead>
+        <tr>
+            <th>测试</th>
+        </tr>
+        </thead>
+        <tbody id="listbody">
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

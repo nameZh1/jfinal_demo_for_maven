@@ -1,0 +1,9 @@
+# true 值支持热加载
+undertow.devMode=true
+undertow.port=8080
+undertow.host=127.0.0.1
+
+
+# web 资源加载路径配置
+undertow.resourcePath = src/main/webapp, classpath:static
+
